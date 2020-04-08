@@ -164,6 +164,119 @@ ggplot(data = gapminder, aes(x=gdpPercap, y=lifeExp, colour = continent,size = p
 
 ggplot (data = gapminder, aes(x=pop,fill=continent))+geom_density(alpha=0.6)+scale_x_log10()+facet_wrap(~year)
  
+library(tidyverse)
 
+gapminder <- read_csv("data/gapminder_data.csv")
 
+a_countries <- filter(gapminder,str_starts(country, "A"))
+a_countries
 
+# adding titles, axis titles etc to the plot
+# done by saving the plot by assigning it to a variable
+rough_plot <- ggplot(a_countries, aes(x=year, y=lifeExp, colour = continent, group = country))+geom_line()+facet_wrap(~country)
+
+rough_plot+labs(title="Figure 1")
+rough_plot+
+  labs(title="Figure 1", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent")
+
+# Challenge 1
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")
+
+# Try in google to find better ways to name titles etc handing spaces between words
+
+# Modifying looks
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_gray()
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(panel.grid.minor = element_blank())
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(panel.grid.minor = element_blank(), plot.title = element_text(face = "bold"))
+
+# Challenge 2
+# 1. To remove the grey boxes behind the country name
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(strip.background  = element_blank())
+
+# 2. Increase the size of the major gridlines
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(strip.background  = element_blank())+theme(panel.grid.major = element_line(size=1))
+# 3. Change the axis titles to be shrunk to size 10 and colour blue 
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(strip.background  = element_blank())+theme(panel.grid.major = element_line(size=1))
+# Change axis title to be shrunk to size 10 and coloured blue ???
+
+rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(panel.grid.major = element_line(size=1)+axis.title = element_text(size = 10, colour = "blue"))
+
+# Saving the images of plots
+# 1 assign the final plot a name
+
+lifeEx_Final <- rough_plot+
+  labs(title="Change of life expectancy for 'A' countries", 
+       x="Year", 
+       y="Life Expectancy",
+       colour ="Continent",caption = "source:gapminder data")+theme_bw()+theme(panel.grid.major = element_line(size=1))
+lifeEx_Final
+
+# save
+ggsave(filename = "Results/LifeExp.png", plot = lifeEx_Final, width = 12, height =10, dpi=300, units = "cm")
+# another way to do the same
+ggsave(filename = "Results/rough.png", width = 12, height =10, dpi=300, units = "cm")
+
+install.packages("cowplot")
+library(cowplot)
+
+plot1 <- ggplot(gapminder, aes(x=gdpPercap,y=lifeExp))+geom_point()
+plot1
+plot2 <- ggplot(gapminder, aes(x=continent,y=lifeExp))+geom_boxplot()
+plot2
+plot3 <- ggplot(gapminder, aes(x=gdpPercap,y=pop))+geom_point()
+plot3
+plot4 <- ggplot(gapminder, aes(x=lifeExp,y=pop))+geom_point()
+plot4
+
+# to see all the plots in one panel
+
+plot_grid(plot1, plot2, plot3, plot4)
+
+plot_grid(plot1, plot2, plot3, plot4, rel_heights = c(1,3), rel_widths = c(4,1))
+
+plot_grid(plot1, plot2, plot3, plot4, labels = "auto")
