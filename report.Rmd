@@ -87,7 +87,7 @@ aus_data <- filter(gapminder, country=="Australia")
 aus_data
 ```
 
-#### results (default =TRUE)
+#### results 
 
 ```{r, results='hide'}
 library(tidyverse)
