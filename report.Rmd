@@ -21,7 +21,28 @@ a block code
 2. italics with underscores
 3. code with three backticks
 
-## 2nd level header
+## 2nd level header (Integrating codes)
+
+```{r}
+library(tidyverse)
+
+gapminder <- read_csv("data/gapminder_data.csv")
+gapminder
+aus_data <- filter(gapminder, country=="Australia")
+ggplot(aus_data, aes(x=year, y=pop))+geom_line()
+```
+
+### 3rd level header (Chunk options)
+
+#### echo (default = TRUE)
+
+```{r, echo=TRUE}
+gapminder <- read_csv("data/gapminder_data.csv")
+gapminder
+aus_data <- filter(gapminder, country=="Australia")
+ggplot(aus_data, aes(x=year, y=pop))+geom_line()
+```
+
 ```{r,echo=FALSE}
 library(tidyverse)
 
@@ -31,40 +52,55 @@ aus_data <- filter(gapminder, country=="Australia")
 ggplot(aus_data, aes(x=year, y=pop))+geom_line()
 ```
 
-### 3rd level header
+#### eval (default = TRUE)
 
 Write some paragrahs
 
 
-```{r}
-aus_data <- filter(gapminder, country=="Australia")
-ggplot(aus_data, aes(x=year, y=pop))+geom_line()
-```
-
-write more texts
-
-```{r,eval=gapminder}
+```{r,eval=TRUE}
 library(tidyverse)
-
 gapminder <- read_csv("data/gapminder_data.csv")
-gapminder
-
-```
-
-```{r}
-library(tidyverse)
-
-gapminder <- read_csv("data/gapminder_data.csv")
-gapminder
 aus_data <- filter(gapminder, country=="Australia")
+aus_data
 ```
 
-```{r}
+
+```{r,eval=FALSE}
 library(tidyverse)
-
 gapminder <- read_csv("data/gapminder_data.csv")
-gapminder
 aus_data <- filter(gapminder, country=="Australia")
-ggplot(aus_data, aes(x=year, y=pop))+geom_line()
+aus_data
 ```
+
+#### message (default = TRUE)
+```{r, message=TRUE}
+library(tidyverse)
+gapminder <- read_csv("data/gapminder_data.csv")
+aus_data <- filter(gapminder, country=="Australia")
+aus_data
+```
+
+```{r, message=FALSE}
+library(tidyverse)
+gapminder <- read_csv("data/gapminder_data.csv")
+aus_data <- filter(gapminder, country=="Australia")
+aus_data
+```
+
+#### results (default =TRUE)
+
+```{r, results='hide'}
+library(tidyverse)
+gapminder <- read_csv("data/gapminder_data.csv")
+aus_data <- filter(gapminder, country=="Australia")
+aus_data
+```
+
+```{r, results='hold'}
+library(tidyverse)
+gapminder <- read_csv("data/gapminder_data.csv")
+aus_data <- filter(gapminder, country=="Australia")
+aus_data
+```
+
 
