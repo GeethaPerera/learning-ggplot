@@ -280,3 +280,10 @@ plot_grid(plot1, plot2, plot3, plot4)
 plot_grid(plot1, plot2, plot3, plot4, rel_heights = c(1,3), rel_widths = c(4,1))
 
 plot_grid(plot1, plot2, plot3, plot4, labels = "auto")
+
+library(tidyverse)
+
+gapminder <- read_csv("data/gapminder_data.csv")
+gapminder
+aus_data <- filter(gapminder, country=="Australia")
+ggplot(aus_data, aes(x=year, y=pop))+geom_line()
